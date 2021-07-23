@@ -13,7 +13,7 @@ import threading
 
 TOT_QUESTIONS = 15
 TIME_START = 3
-TIME_GAME = 30
+TIME_GAME = 40
 questions_made = 0
 score = 0
 game_finished = False
@@ -160,7 +160,8 @@ def choice():
         client.send("{trick}".encode("utf8"))
         stop_game()
         #e mando il risultato
-        client.send(("{result}" + str(score)).encode("utf8"))
+        if not sck_closed:
+            client.send(("{result}" + str(score)).encode("utf8"))
     elif questions_made == TOT_QUESTIONS:
         #se sono finite le domande vengono disabilitati i tasti ma il timer continua fino alla fine
         lbl_question2["text"] = "No more questions..."
