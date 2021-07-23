@@ -130,7 +130,10 @@ def send_receive_client_message(client_connection, client_ip_addr):
         elif msg.startswith("{help}".encode("utf8")):
             client_connection.send("{quit} to leave, {play} to start the game, {record} to view the record".encode("utf8"))
         elif msg.startswith("{record}".encode("utf8")):
-            client_connection.send(("The record is: " + str(maxResult) + " Detained by " + bestPlayer).encode("utf8"))
+            if maxResult == None:
+                client_connection.send(("Nobody has played yet").encode("utf8"))
+            else:
+                client_connection.send(("The record is: " + str(maxResult) + " Detained by " + bestPlayer).encode("utf8"))
         elif msg.startswith("{result}".encode("utf8")):
             effmsg = msg.decode("utf8")
             result = int(effmsg.replace("{result}", ""))
